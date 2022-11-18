@@ -1,7 +1,12 @@
 import type { Component } from "solid-js";
+import Header from "./components/Header";
 
 const App: Component = () => {
-  return <div class="bg-red-500">Hey</div>;
+  return (
+    <>
+      <Header />
+    </>
+  );
 };
 
 export default App;
