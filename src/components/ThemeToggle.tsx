@@ -35,14 +35,14 @@ const ThemeToggle: Component = () => {
     htmlEl.className = themeToSet;
   };
 
+  const iconBtn = (icon: typeof MoonIcon | typeof SunIcon) => (
+    <IconButton icon={icon} onClick={toggleTheme} />
+  );
+
   return (
-    <Switch>
-      <Match when={theme() === Theme.DARK}>
-        <IconButton icon={SunIcon} onClick={toggleTheme} />
-      </Match>
-      <Match when={theme() === Theme.LIGHT}>
-        <IconButton icon={MoonIcon} onClick={toggleTheme} />
-      </Match>
+    <Switch fallback={iconBtn(SunIcon)}>
+      <Match when={theme() === Theme.DARK}>{iconBtn(SunIcon)}</Match>
+      <Match when={theme() === Theme.LIGHT}>{iconBtn(MoonIcon)}</Match>
     </Switch>
   );
 };

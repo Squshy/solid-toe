@@ -9,14 +9,14 @@ interface IconButtonProps extends IconProps {
 }
 
 const IconButton: Component<IconButtonProps> = (props) => {
-  const iconBaseClasses = "hite h-4 w-4";
+  const iconBaseClasses = "h-4 w-4";
   const classes = props.class
     ? `${props.class} ${iconBaseClasses}`
     : iconBaseClasses;
 
   return (
     <button
-      class="rounded-md border-solid-200 border-2 p-3"
+      class="rounded-md border-solid-200 border-2 p-3 dark:border-red-900"
       onClick={props.onClick}
     >
       <props.icon class={classes} />
