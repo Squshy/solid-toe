@@ -4,8 +4,10 @@ import ToggleThemeButton from "./ToggleThemeButton";
 const Header: Component = () => {
   return (
     <div class="w-full p-4 flex flex-row">
-      <div>Solid Toe</div>
-      <ToggleThemeButton />
+      <div class="w-full flex">Solid Toe</div>
+      <div class="w-full flex-row flex justify-start">
+        <ToggleThemeButton />
+      </div>
     </div>
   );
 };

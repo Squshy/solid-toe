@@ -1,25 +1,24 @@
-import type { Component } from "solid-js";
+import type { Component, JSX } from "solid-js";
 import type { IconProps } from "../icons";
 
 type IconComponent = Component<IconProps>;
 
-interface IconButtonProps extends IconProps {
+export interface IconButtonProps
+  extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {
   icon: IconComponent;
-  onClick?: () => void;
+  iconClass?: string;
 }
 
 const IconButton: Component<IconButtonProps> = (props) => {
-  const iconBaseClasses = "h-4 w-4";
-  const classes = props.class
-    ? `${props.class} ${iconBaseClasses}`
-    : iconBaseClasses;
+  const buttonBaseClasses =
+    "rounded-md border-solid-200 border-2 p-3 dark:border-red-900";
+  const buttonClasses = props.class
+    ? `${props.class} ${buttonBaseClasses}`
+    : buttonBaseClasses;
 
   return (
-    <button
-      class="rounded-md border-solid-200 border-2 p-3 dark:border-red-900"
-      onClick={props.onClick}
-    >
-      <props.icon class={classes} />
+    <button class={buttonClasses} onClick={props.onClick}>
+      <props.icon class={props.iconClass ?? "h-4 w-4"} />
     </button>
   );
 };

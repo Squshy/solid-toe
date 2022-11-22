@@ -2,7 +2,7 @@ import type { Component } from "solid-js";
 import { createSignal, Switch, Match } from "solid-js";
 import { getLocalItem, setLocalItem } from "../utils/local-storage";
 import { MoonIcon, SunIcon } from "../icons";
-import IconButton from "./IconButton";
+import IconButton, { IconButtonProps } from "./IconButton";
 
 const THEME_KEY = "theme";
 
@@ -21,7 +21,10 @@ function getHTMLElement() {
   return htmlEls[0];
 }
 
-const ThemeToggle: Component = () => {
+interface ToggleThemeButtonProps
+  extends Omit<IconButtonProps, "icon" | "onClick"> {}
+
+const ToggleThemeButton: Component<ToggleThemeButtonProps> = (props) => {
   const storedTheme = getLocalItem<Theme>(THEME_KEY, Theme.LIGHT);
   const htmlEl = getHTMLElement();
 
@@ -36,7 +39,7 @@ const ThemeToggle: Component = () => {
   };
 
   const iconBtn = (icon: typeof MoonIcon | typeof SunIcon) => (
-    <IconButton icon={icon} onClick={toggleTheme} />
+    <IconButton icon={icon} onClick={toggleTheme} {...props} />
   );
 
   return (
@@ -47,4 +50,4 @@ const ThemeToggle: Component = () => {
   );
 };
 
-export default ThemeToggle;
+export default ToggleThemeButton;
