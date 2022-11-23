@@ -11,7 +11,7 @@ export interface IconButtonProps
 
 const IconButton: Component<IconButtonProps> = (props) => {
   const buttonBaseClasses =
-    "rounded-md border-solid-200 border-2 p-3 dark:border-red-900";
+    "rounded-md border-solid-200 border-2 p-3 dark:border-slate-600";
   const buttonClasses = props.class
     ? `${props.class} ${buttonBaseClasses}`
     : buttonBaseClasses;

@@ -27,6 +27,7 @@ interface ToggleThemeButtonProps
 const ToggleThemeButton: Component<ToggleThemeButtonProps> = (props) => {
   const storedTheme = getLocalItem<Theme>(THEME_KEY, Theme.LIGHT);
   const htmlEl = getHTMLElement();
+  htmlEl.className = storedTheme;
 
   const [theme, setTheme] = createSignal(storedTheme);
 
