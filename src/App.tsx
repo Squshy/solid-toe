@@ -1,12 +1,12 @@
 import type { Component } from "solid-js";
 import Header from "./components/Header";
-import Game from "./components/toe/Game";
+import Toe from "./components/toe";
 
 const App: Component = () => {
   return (
     <div class="h-screen">
       <Header />
-      <Game />
+      <Toe />
     </div>
   );
 };

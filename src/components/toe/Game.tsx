@@ -1,23 +1,14 @@
 import type { Component } from "solid-js";
-import Square from "./Square";
+import { useGameContext } from "../../contexts/GameContext";
+import PlayerSelect from "./PlayerSelect";
+import Squares from "./Squares";
 
 const Game: Component = () => {
-  const buildSquares = () => {
-    const squares = [];
-    const boardSize = 9;
-
-    for (let i = 0; i < boardSize; ++i) {
-      squares.push(<Square row={Math.floor(i / 3)} col={i % 3} />);
-    }
-
-    return squares;
-  };
+  const context = useGameContext();
 
   return (
     <div class="w-full flex justify-center p-4">
-      <div class="max-w-[19.5rem] md:max-w-[34.5rem] flex flex-wrap gap-2 justify-center">
-        {buildSquares()}
-      </div>
+      {context().currentPlayer ? <Squares /> : <PlayerSelect />}
     </div>
   );
 };

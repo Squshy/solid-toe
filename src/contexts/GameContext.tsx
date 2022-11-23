@@ -1,13 +1,15 @@
-import type { Component } from "solid-js";
-import { createContext, useContext } from "solid-js";
+import type { Component, JSX, Accessor } from "solid-js";
+import { createContext, useContext, createMemo } from "solid-js";
 import { createStore } from "solid-js/store";
 
 interface IGameContext {
   isSquareOccupied: (row: number, col: number) => boolean;
-  occupySquare: (row: number, col: number, player: Player) => void;
+  occupySquare: (row: number, col: number) => void;
+  currentPlayer: Player | undefined;
+  selectPlayer: (player: Player) => void;
 }
 
-const GameContext = createContext<IGameContext>();
+const GameContext = createContext<Accessor<IGameContext>>();
 
 interface IGameState {
   currentPlayer: Player | undefined;
@@ -21,7 +23,7 @@ const initialState: IGameState = {
 } as const;
 
 interface GameProviderProps {
-  children?: HTMLElement | HTMLElement[];
+  children?: JSX.Element | JSX.Element[];
 }
 
 const GameProvider: Component<GameProviderProps> = (props) => {
@@ -29,25 +31,32 @@ const GameProvider: Component<GameProviderProps> = (props) => {
 
   const mapKey = (row: number, col: number): string => `${row}:${col}`;
 
+  const selectPlayer = (player: Player): void => {
+    setState({ currentPlayer: player });
+  };
+
   const isSquareOccupied = (row: number, col: number): boolean => {
     return state.occupiedSquares.has(mapKey(row, col));
   };
 
-  const occupySquare = (row: number, col: number, player: Player): void => {
-    if (isSquareOccupied(row, col)) {
+  const occupySquare = (row: number, col: number): void => {
+    if (isSquareOccupied(row, col) || !state.currentPlayer) {
       return;
     }
 
     // Kinda gross but gotta re-make a new map
     const newMap = new Map(state.occupiedSquares);
-    newMap.set(mapKey(row, col), player);
+    newMap.set(mapKey(row, col), state.currentPlayer);
     setState({ occupiedSquares: newMap });
   };
 
-  const providerValue: IGameContext = {
+  // This doesn't feel right?
+  const providerValue = createMemo(() => ({
     isSquareOccupied,
     occupySquare,
-  } as const;
+    currentPlayer: state.currentPlayer,
+    selectPlayer,
+  }));
 
   return (
     <GameContext.Provider value={providerValue}>
